@@ -3,7 +3,7 @@ import { useData } from "../context/DataContext";
 import { AiFillDelete } from "react-icons/ai";
 import { BsFillPencilFill } from "react-icons/bs";
 
-export const NotesCard = ({ findVideo }) => {
+export const NotesCard = ({ findVideo, setShowNotesModal }) => {
   const { state, dispatch } = useData();
   const getVideoData = state.videoData.find(
     (item) => item?._id === findVideo?._id
@@ -19,12 +19,13 @@ export const NotesCard = ({ findVideo }) => {
             <div className="flex gap-3">
               <BsFillPencilFill
                 className="text-sm hover:text-primary"
-                onClick={() =>
+                onClick={() => {
                   dispatch({
                     type: "EDIT_NOTES",
                     payload: { noteId: item?._id, findVideo: getVideoData },
-                  })
-                }
+                  });
+                  setShowNotesModal(true);
+                }}
               />
               <AiFillDelete
                 className=" hover:text-primary"

@@ -121,19 +121,11 @@ export const DataProvider = ({ children }) => {
         return { ...state, videoData: newData };
 
       case "EDIT_NOTES":
-        const editData = state?.videoData.map((item) =>
-          item._id === action.payload.findVideo._id
-            ? {
-                ...item,
-                notes: item.notes.map((note) =>
-                  note._id === action.payload?.noteId
-                    ? action.payload?.noteId
-                    : item
-                ),
-              }
-            : item
-        );
-        return { ...state, videoData: editData };
+        const editData = state?.videoData
+          .find((item) => item._id === action.payload.findVideo._id)
+          .notes.find((item) => item?._id === action.payload?.noteId);
+        console.log(editData);
+        return { ...state, notesData: editData };
 
       case "DELETE_NOTES":
         const deleteData = state?.videoData.map((item) =>
@@ -148,6 +140,22 @@ export const DataProvider = ({ children }) => {
         );
         return { ...state, videoData: deleteData };
 
+      case "EDIT_PREVIOUS_NOTE":
+        console.log(action.payload);
+        const editPreviousData = state?.videoData.map((item) =>
+          item._id === action.payload.videoData._id
+            ? {
+                ...item,
+                notes: item.notes.map((note) =>
+                  note._id === action.payload?.noteData?._id
+                    ? { ...note, content: action.payload?.noteData?.content }
+                    : note
+                ),
+              }
+            : item
+        );
+        return { ...state, videoData: editPreviousData };
+
       default:
         return state;
     }
@@ -155,7 +163,6 @@ export const DataProvider = ({ children }) => {
 
   const localStgWatchLater = JSON.parse(localStorage.getItem("watchLater"));
   const localStgPlayList = JSON.parse(localStorage.getItem("playList"));
-  const localStgNotes = JSON.parse(localStorage.getItem("notes"));
 
   const [state, dispatch] = useReducer(reducerFunction, {
     categoryData: [...categories],
@@ -163,6 +170,7 @@ export const DataProvider = ({ children }) => {
     searchData: [...videos],
     watchLaterData: localStgWatchLater ?? [],
     playlistData: localStgPlayList ?? [],
+    notesData: {},
   });
 
   return (

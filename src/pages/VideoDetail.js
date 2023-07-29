@@ -94,7 +94,10 @@ export const VideoDetail = () => {
           </div>
         </div>
         <hr />
-        <NotesCard findVideo={findVideo} />
+        <NotesCard
+          findVideo={findVideo}
+          setShowNotesModal={setShowNotesModal}
+        />
       </div>
       <SuggestionVideos />
     </div>

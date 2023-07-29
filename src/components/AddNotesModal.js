@@ -4,20 +4,30 @@ import { useData } from "../context/DataContext";
 import { toast } from "react-toastify";
 
 export const AddNotesModal = ({ setShowNotesModal, findVideo }) => {
-  const { dispatch } = useData();
-  const [inputData, setInputData] = useState("");
+  const { state, dispatch } = useData();
+  const [inputData, setInputData] = useState(state?.notesData?.content);
 
   const clickHandler = () => {
-    if (inputData) {
-      const playlistId = uuid();
-      const includeId = { content: inputData, _id: playlistId };
+    const findId = state?.notesData?._id;
+    if (findId && inputData) {
+      const includeId = { content: inputData, _id: findId };
       dispatch({
-        type: "ADD_NOTES",
+        type: "EDIT_PREVIOUS_NOTE",
         payload: { noteData: includeId, videoData: findVideo },
       });
       setShowNotesModal(false);
     } else {
-      toast.error("Please add some notes!");
+      if (inputData) {
+        const playlistId = uuid();
+        const includeId = { content: inputData, _id: playlistId };
+        dispatch({
+          type: "ADD_NOTES",
+          payload: { noteData: includeId, videoData: findVideo },
+        });
+        setShowNotesModal(false);
+      } else {
+        toast.error("Please add some notes!");
+      }
     }
   };
   return (
@@ -28,6 +38,7 @@ export const AddNotesModal = ({ setShowNotesModal, findVideo }) => {
       <input
         type="text"
         placeholder="New notes"
+        value={inputData}
         className="block my-2 mb-3 w-full px-2 py-1 border-2 border-gray-100 rounded-md"
         onChange={(e) => setInputData(() => e.target.value)}
       />
