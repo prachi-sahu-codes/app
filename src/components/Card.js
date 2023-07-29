@@ -10,7 +10,7 @@ export const Card = ({ item }) => {
       className="relative cursor-pointer"
       onClick={() => navigate(`/video/${item._id}`)}
     >
-      <img src={item?.thumbnail} alt="" className="w-64 h-40 object-cover" />
+      <img src={item?.thumbnail} alt="" className="w-64 h-36 object-cover" />
       <div className="absolute top-0 right-0 p-1 bg-white rounded-bl-lg">
         <MdOutlineWatchLater className="text-lg text-primary" />
       </div>

@@ -16,7 +16,7 @@ export const Home = () => {
             className="w-60 cursor-pointer"
             onClick={() => navigate(`/category/${category}`)}
           >
-            <img src={thumbnail} alt="" className="w-64 h-40 object-cover" />
+            <img src={thumbnail} alt="" className="w-64 h-36 object-cover" />
             <p className="font-bold py-2">{category}</p>
           </li>
         ))}
