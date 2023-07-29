@@ -27,16 +27,12 @@
   align-items: left;
   gap: 2rem;
   margin: 0 1rem;
-  padding: 2rem 0;
-}
-
-.main-content {
-  padding: 1rem 2rem;
+  padding: 3rem 0;
 }
 
 .navLink {
   text-decoration: none;
-  padding: 0.5rem 1rem;
+  padding: 0.3rem 1rem;
   font-weight: 600;
   font-size: 1.1rem;
 }
