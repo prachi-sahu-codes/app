@@ -4,7 +4,7 @@ import { MdOutlineWatchLater, MdWatchLater } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 import { useData } from "../context/DataContext";
 
-export const Card = ({ item, noDetail }) => {
+export const Card = ({ item, noDetail, playlistId }) => {
   const { state, dispatch } = useData();
   const navigate = useNavigate();
 
@@ -27,7 +27,10 @@ export const Card = ({ item, noDetail }) => {
           <RxCross2
             className="text-xl mb-1 cursor-pointer text-primary bg-white rounded-bl-lg"
             onClick={(e) => {
-              dispatch({ type: "VIDEO_DELETE_PLAYLIST", payload: item._id });
+              dispatch({
+                type: "VIDEO_DELETE_PLAYLIST",
+                payload: { playlistId: playlistId, videoId: item._id },
+              });
               e.stopPropagation();
             }}
           />

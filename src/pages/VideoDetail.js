@@ -9,11 +9,14 @@ import { HiOutlinePencilAlt } from "react-icons/hi";
 import { useData } from "../context/DataContext";
 import { SuggestionVideos } from "../components/SuggestionVideos";
 import { AddPlaylistModal } from "../components/AddPlaylistModal";
+import { NotesCard } from "../components/NotesCard";
+import { AddNotesModal } from "../components/AddNotesModal";
 
 export const VideoDetail = () => {
   const { videoId } = useParams();
   const { state, dispatch } = useData();
   const [showPlaylistModal, setShowPlaylistModal] = useState(false);
+  const [showNotesModal, setShowNotesModal] = useState(false);
 
   const findVideo = state?.videoData?.find(
     (item) => item._id === Number(videoId)
@@ -76,14 +79,22 @@ export const VideoDetail = () => {
                 />
               )}
             </div>
-
-            <HiOutlinePencilAlt className="text-md cursor-pointer hover:text-primary" />
+            <div className="relative">
+              <HiOutlinePencilAlt
+                className="text-md cursor-pointer hover:text-primary"
+                onClick={() => setShowNotesModal((prev) => !prev)}
+              />
+              {showNotesModal && (
+                <AddNotesModal
+                  setShowNotesModal={setShowNotesModal}
+                  findVideo={findVideo}
+                />
+              )}
+            </div>
           </div>
         </div>
         <hr />
-        <div>
-          <h1 className="font-bold text-xl my-5">My Notes</h1>
-        </div>
+        <NotesCard findVideo={findVideo} />
       </div>
       <SuggestionVideos />
     </div>

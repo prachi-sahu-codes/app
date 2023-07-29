@@ -17,14 +17,14 @@ export const PlaylistDetail = () => {
     <div>
       <h1 className="font-bold text-2xl my-4">{findPlaylist?.title}</h1>
       {findPlaylist?.videos.length > 0 ? (
-        <ul>
+        <ul className="flex flex-wrap gap-10">
           {findPlaylist?.videos.map((item) => (
             <li
               key={item._id}
               className="w-60"
               onClick={() => navigate(`/video/${item._id}`)}
             >
-              <Card item={item} noDetail />
+              <Card item={item} noDetail playlistId={playlistId} />
             </li>
           ))}
         </ul>

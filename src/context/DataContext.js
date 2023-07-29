@@ -22,7 +22,7 @@ export const DataProvider = ({ children }) => {
           "watchLater",
           JSON.stringify([...state?.watchLaterData, findVideo])
         );
-
+        toast.success("Video added to watch later!");
         return {
           ...state,
           watchLaterData: [...state?.watchLaterData, findVideo],
@@ -34,7 +34,7 @@ export const DataProvider = ({ children }) => {
         );
 
         localStorage.setItem("watchLater", JSON.stringify(removeVideo));
-
+        toast.error("Video removed from watch later!");
         return {
           ...state,
           watchLaterData: removeVideo,
@@ -52,6 +52,7 @@ export const DataProvider = ({ children }) => {
           "playList",
           JSON.stringify([...state.playlistData, newPlaylist])
         );
+        toast.success("New playlist created!");
         return { ...state, playlistData: [...state.playlistData, newPlaylist] };
 
       case "DELETE_PLAYLIST":
@@ -59,6 +60,7 @@ export const DataProvider = ({ children }) => {
           (item) => item._id !== action.payload
         );
         localStorage.setItem("playList", JSON.stringify(updatedPlaylist));
+        toast.error("Playlist deleted!");
         return { ...state, playlistData: updatedPlaylist };
 
       case "VIDEO_ADD_PLAYLIST":
@@ -81,6 +83,38 @@ export const DataProvider = ({ children }) => {
         }
 
       case "VIDEO_DELETE_PLAYLIST":
+        const deleteVideoFromPlaylist = state?.playlistData.map((item) =>
+          item._id === action.payload.playlistId
+            ? {
+                ...item,
+                videos: item?.videos?.filter(
+                  (item) => item._id !== action.payload.videoId
+                ),
+              }
+            : item
+        );
+
+        console.log(deleteVideoFromPlaylist);
+        localStorage.setItem(
+          "playList",
+          JSON.stringify(deleteVideoFromPlaylist)
+        );
+        toast.error("Video deleted from the playlist!");
+        return { ...state, playlistData: deleteVideoFromPlaylist };
+
+      case "ADD_NOTES":
+        const newData = state?.videoData.map((item) =>
+          item._id === action.payload.videoData._id
+            ? { ...item, notes: [action.payload.noteData] }
+            : item
+        );
+
+        return { ...state };
+
+      case "EDIT_NOTES":
+        return { ...state };
+
+      case "DELETE_NOTES":
         return { ...state };
 
       default:
