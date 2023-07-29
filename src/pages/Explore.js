@@ -16,17 +16,21 @@ export const Explore = () => {
         className="w-full shadow-md rounded-full p-2 bg-gray-50 text-center mb-8"
         onChange={(e) => dispatch({ type: "SEARCH", payload: e.target.value })}
       />
-      <ul className="flex flex-wrap gap-10">
-        {state?.searchData?.map((item) => (
-          <li
-            key={item._id}
-            className="w-60"
-            onClick={() => navigate(`/video/${item._id}`)}
-          >
-            <Card item={item} />
-          </li>
-        ))}
-      </ul>
+      {state?.searchData?.length > 0 ? (
+        <ul className="flex flex-wrap gap-10">
+          {state?.searchData?.map((item) => (
+            <li
+              key={item._id}
+              className="w-60"
+              onClick={() => navigate(`/video/${item._id}`)}
+            >
+              <Card item={item} />
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <h1 className="centerContent text-lg">No videos found!</h1>
+      )}
     </div>
   );
 };

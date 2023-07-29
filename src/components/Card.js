@@ -1,9 +1,15 @@
 import React from "react";
 import { useNavigate } from "react-router";
-import { MdOutlineWatchLater } from "react-icons/md";
+import { MdOutlineWatchLater, MdWatchLater } from "react-icons/md";
+import { useData } from "../context/DataContext";
 
 export const Card = ({ item }) => {
+  const { state, dispatch } = useData();
   const navigate = useNavigate();
+
+  const checkWatchLater = state?.watchLaterData?.filter(
+    (video) => video._id === item._id
+  );
 
   return (
     <div
@@ -12,7 +18,23 @@ export const Card = ({ item }) => {
     >
       <img src={item?.thumbnail} alt="" className="w-64 h-36 object-cover" />
       <div className="absolute top-0 right-0 p-1 bg-white rounded-bl-lg">
-        <MdOutlineWatchLater className="text-lg text-primary" />
+        {checkWatchLater.length > 0 ? (
+          <MdWatchLater
+            className="text-lg text-primary"
+            onClick={(e) => {
+              dispatch({ type: "REMOVE_WATCHLATER", payload: item._id });
+              e.stopPropagation();
+            }}
+          />
+        ) : (
+          <MdOutlineWatchLater
+            className="text-lg text-primary"
+            onClick={(e) => {
+              dispatch({ type: "ADD_WATCHLATER", payload: item._id });
+              e.stopPropagation();
+            }}
+          />
+        )}
       </div>
       <div className="flex gap-2 ">
         <img

@@ -1,16 +1,24 @@
 import React from "react";
 import { useParams } from "react-router";
-import { MdOutlineWatchLater, MdPlaylistAdd } from "react-icons/md";
+import {
+  MdWatchLater,
+  MdOutlineWatchLater,
+  MdPlaylistAdd,
+} from "react-icons/md";
 import { HiOutlinePencilAlt } from "react-icons/hi";
 import { useData } from "../context/DataContext";
 import { SuggestionVideos } from "../components/SuggestionVideos";
 
 export const VideoDetail = () => {
   const { videoId } = useParams();
-  const { state } = useData();
+  const { state, dispatch } = useData();
 
   const findVideo = state?.videoData?.find(
     (item) => item._id === Number(videoId)
+  );
+
+  const checkWatchLater = state?.watchLaterData?.filter(
+    (video) => video._id === findVideo._id
   );
 
   return (
@@ -23,7 +31,7 @@ export const VideoDetail = () => {
           title="YouTube video player"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
+          allowFullScreen
         ></iframe>
 
         <div className="flex items-center justify-between">
@@ -36,7 +44,24 @@ export const VideoDetail = () => {
             <h1 className="font-bold pt-2 text-sm">{findVideo?.title}</h1>
           </div>
           <div className="flex gap-3 items-center">
-            <MdOutlineWatchLater className="text-lg cursor-pointer hover:text-primary" />
+            {checkWatchLater?.length > 0 ? (
+              <MdWatchLater
+                className="text-lg cursor-pointer hover:text-primary"
+                onClick={() => {
+                  dispatch({
+                    type: "REMOVE_WATCHLATER",
+                    payload: findVideo._id,
+                  });
+                }}
+              />
+            ) : (
+              <MdOutlineWatchLater
+                className="text-lg cursor-pointer hover:text-primary"
+                onClick={() => {
+                  dispatch({ type: "ADD_WATCHLATER", payload: findVideo._id });
+                }}
+              />
+            )}
             <MdPlaylistAdd className="text-xl cursor-pointer hover:text-primary" />
             <HiOutlinePencilAlt className="text-md cursor-pointer hover:text-primary" />
           </div>
