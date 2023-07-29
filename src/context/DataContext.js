@@ -103,7 +103,7 @@ export const DataProvider = ({ children }) => {
         return { ...state, playlistData: deleteVideoFromPlaylist };
 
       case "ADD_NOTES":
-        const newData = state?.videoData.map((item) =>
+        const newData = state?.videoData?.map((item) =>
           item._id === action.payload.videoData._id
             ? { ...item, notes: [action.payload.noteData] }
             : item

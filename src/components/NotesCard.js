@@ -14,15 +14,15 @@ export const NotesCard = ({ findVideo }) => {
       <h1 className="font-bold text-xl my-5">My Notes</h1>
       <ul>
         {getVideoData?.notes?.map((item) => (
-          <li key={item._id} className="flex justify-between items-center">
-            <p>{item.content}</p>
+          <li key={item?._id} className="flex justify-between items-center">
+            <p>{item?.content}</p>
             <div className="flex gap-3">
               <BsFillPencilFill
                 className="text-sm hover:text-primary"
                 onClick={() =>
                   dispatch({
                     type: "EDIT_NOTES",
-                    payload: { noteId: item._id, findVideo: getVideoData },
+                    payload: { noteId: item?._id, findVideo: getVideoData },
                   })
                 }
               />
@@ -31,7 +31,7 @@ export const NotesCard = ({ findVideo }) => {
                 onClick={() =>
                   dispatch({
                     type: "DELETE_NOTES",
-                    payload: { noteId: item._id, findVideo: getVideoData },
+                    payload: { noteId: item?._id, findVideo: getVideoData },
                   })
                 }
               />
