@@ -109,13 +109,35 @@ export const DataProvider = ({ children }) => {
             : item
         );
 
-        return { ...state };
+        return { ...state, videoData: newData };
 
       case "EDIT_NOTES":
-        return { ...state };
+        const editData = state?.videoData.map((item) =>
+          item._id === action.payload.findVideo._id
+            ? {
+                ...item,
+                notes: item.notes.map((note) =>
+                  note._id === action.payload?.noteId
+                    ? action.payload?.noteId
+                    : item
+                ),
+              }
+            : item
+        );
+        return { ...state, videoData: editData };
 
       case "DELETE_NOTES":
-        return { ...state };
+        const deleteData = state?.videoData.map((item) =>
+          item._id === action.payload.findVideo._id
+            ? {
+                ...item,
+                notes: item.notes.filter(
+                  (note) => note._id !== action.payload?.noteId
+                ),
+              }
+            : item
+        );
+        return { ...state, videoData: deleteData };
 
       default:
         return state;
@@ -124,6 +146,7 @@ export const DataProvider = ({ children }) => {
 
   const localStgWatchLater = JSON.parse(localStorage.getItem("watchLater"));
   const localStgPlayList = JSON.parse(localStorage.getItem("playList"));
+  const localStgNotes = JSON.parse(localStorage.getItem("notes"));
 
   const [state, dispatch] = useReducer(reducerFunction, {
     categoryData: [...categories],
