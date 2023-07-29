@@ -14,7 +14,10 @@ export const NotesCard = ({ findVideo, setShowNotesModal }) => {
       <h1 className="font-bold text-xl my-5">My Notes</h1>
       <ul>
         {getVideoData?.notes?.map((item) => (
-          <li key={item?._id} className="flex justify-between items-center">
+          <li
+            key={item?._id}
+            className="flex justify-between items-center mb-2"
+          >
             <p>{item?.content}</p>
             <div className="flex gap-3">
               <BsFillPencilFill

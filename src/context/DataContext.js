@@ -118,6 +118,8 @@ export const DataProvider = ({ children }) => {
           }
         });
 
+        localStorage.setItem("wholeData", JSON.stringify(newData));
+
         return { ...state, videoData: newData };
 
       case "EDIT_NOTES":
@@ -138,10 +140,10 @@ export const DataProvider = ({ children }) => {
               }
             : item
         );
+        localStorage.setItem("wholeData", JSON.stringify(deleteData));
         return { ...state, videoData: deleteData };
 
       case "EDIT_PREVIOUS_NOTE":
-        console.log(action.payload);
         const editPreviousData = state?.videoData.map((item) =>
           item._id === action.payload.videoData._id
             ? {
@@ -154,6 +156,7 @@ export const DataProvider = ({ children }) => {
               }
             : item
         );
+        localStorage.setItem("wholeData", JSON.stringify(editPreviousData));
         return { ...state, videoData: editPreviousData };
 
       default:
@@ -163,10 +166,11 @@ export const DataProvider = ({ children }) => {
 
   const localStgWatchLater = JSON.parse(localStorage.getItem("watchLater"));
   const localStgPlayList = JSON.parse(localStorage.getItem("playList"));
+  const localStgData = JSON.parse(localStorage.getItem("wholeData"));
 
   const [state, dispatch] = useReducer(reducerFunction, {
     categoryData: [...categories],
-    videoData: [...videos],
+    videoData: localStgData ?? [...videos],
     searchData: [...videos],
     watchLaterData: localStgWatchLater ?? [],
     playlistData: localStgPlayList ?? [],
