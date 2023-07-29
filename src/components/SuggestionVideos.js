@@ -7,7 +7,7 @@ export const SuggestionVideos = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="w-96 mx-3">
+    <div className="w-2/5 h-screen mx-3 overflow-y-scroll hideScrollBar">
       <h1 className="font-bold text-lg mt-2">More Videos: </h1>
       <ul className="">
         {state?.videoData.map(({ _id, thumbnail, title, creator }) => (

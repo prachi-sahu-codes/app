@@ -13,10 +13,14 @@ export const Home = () => {
         {state?.categoryData.map(({ _id, thumbnail, src, category }) => (
           <li
             key={_id}
-            className="w-60 cursor-pointer"
+            className="w-60 cursor-pointer hover:opacity-80 hover:scale-105"
             onClick={() => navigate(`/category/${category}`)}
           >
-            <img src={thumbnail} alt="" className="w-64 h-36 object-cover" />
+            <img
+              src={thumbnail}
+              alt=""
+              className="w-64 h-36 object-cover rounded-md"
+            />
             <p className="font-bold py-2">{category}</p>
           </li>
         ))}

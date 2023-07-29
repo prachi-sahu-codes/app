@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router";
 import {
   MdWatchLater,
@@ -8,10 +8,12 @@ import {
 import { HiOutlinePencilAlt } from "react-icons/hi";
 import { useData } from "../context/DataContext";
 import { SuggestionVideos } from "../components/SuggestionVideos";
+import { AddPlaylistModal } from "../components/AddPlaylistModal";
 
 export const VideoDetail = () => {
   const { videoId } = useParams();
   const { state, dispatch } = useData();
+  const [showPlaylistModal, setShowPlaylistModal] = useState(false);
 
   const findVideo = state?.videoData?.find(
     (item) => item._id === Number(videoId)
@@ -23,7 +25,7 @@ export const VideoDetail = () => {
 
   return (
     <div className="py-3 px-6 flex overflow-x-hidden">
-      <div className="">
+      <div className="w-full h-screen overflow-y-scroll hideScrollBar px-2">
         <iframe
           width="760"
           height="415"
@@ -62,7 +64,19 @@ export const VideoDetail = () => {
                 }}
               />
             )}
-            <MdPlaylistAdd className="text-xl cursor-pointer hover:text-primary" />
+            <div className="relative">
+              <MdPlaylistAdd
+                className="text-xl cursor-pointer hover:text-primary"
+                onClick={() => setShowPlaylistModal((prev) => !prev)}
+              />
+              {showPlaylistModal && (
+                <AddPlaylistModal
+                  setShowPlaylistModal={setShowPlaylistModal}
+                  findVideo={findVideo}
+                />
+              )}
+            </div>
+
             <HiOutlinePencilAlt className="text-md cursor-pointer hover:text-primary" />
           </div>
         </div>

@@ -26,7 +26,7 @@ export const Header = () => {
         style={activeStyle}
         className="navLink flex items-center"
       >
-        <MdPlaylistAdd className="mr-1 mb-1" />
+        <MdPlaylistAdd className="mr-1 mb-1 text-xl" />
         <span>Playlist</span>
       </NavLink>
       <NavLink

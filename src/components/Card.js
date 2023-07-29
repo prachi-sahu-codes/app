@@ -1,9 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router";
 import { MdOutlineWatchLater, MdWatchLater } from "react-icons/md";
+import { RxCross2 } from "react-icons/rx";
 import { useData } from "../context/DataContext";
 
-export const Card = ({ item }) => {
+export const Card = ({ item, noDetail }) => {
   const { state, dispatch } = useData();
   const navigate = useNavigate();
 
@@ -13,11 +14,24 @@ export const Card = ({ item }) => {
 
   return (
     <div
-      className="relative cursor-pointer"
+      className="relative hover:opacity-80 cursor-pointer hover:scale-105"
       onClick={() => navigate(`/video/${item._id}`)}
     >
-      <img src={item?.thumbnail} alt="" className="w-64 h-36 object-cover" />
+      <img
+        src={item?.thumbnail}
+        alt=""
+        className="w-64 h-36 object-cover rounded-md"
+      />
       <div className="absolute top-0 right-0 p-1 bg-white rounded-bl-lg">
+        {noDetail && (
+          <RxCross2
+            className="text-xl mb-1 cursor-pointer text-primary bg-white rounded-bl-lg"
+            onClick={(e) => {
+              dispatch({ type: "VIDEO_DELETE_PLAYLIST", payload: item._id });
+              e.stopPropagation();
+            }}
+          />
+        )}
         {checkWatchLater.length > 0 ? (
           <MdWatchLater
             className="text-lg text-primary"
@@ -36,6 +50,7 @@ export const Card = ({ item }) => {
           />
         )}
       </div>
+
       <div className="flex gap-2 ">
         <img
           src="https://picsum.photos/50/50"

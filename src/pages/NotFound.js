@@ -9,7 +9,7 @@ export const NotFound = () => {
       <p>Go back to Home</p>
       <button
         onClick={() => navigate("/")}
-        className="bg-primary text-white py-1 px-4 text-lg rounded-md m-4"
+        className="bg-primary hover:opacity-80 text-white pt-1 px-4 text-lg rounded-md m-4"
       >
         Home
       </button>
