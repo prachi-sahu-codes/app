@@ -1,4 +1,5 @@
 import { createContext, useContext, useReducer } from "react";
+import { categories, videos } from "../backend/data";
 
 const DataContext = createContext();
 
@@ -11,7 +12,10 @@ export const DataProvider = ({ children }) => {
         return state;
     }
   };
-  const [state, dispatch] = useReducer(reducerFunction, { categories: "" });
+  const [state, dispatch] = useReducer(reducerFunction, {
+    categoryData: [...categories],
+    videoData: [...videos],
+  });
   return (
     <DataContext.Provider value={{ state, dispatch }}>
       {children}
