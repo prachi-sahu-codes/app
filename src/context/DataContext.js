@@ -157,7 +157,7 @@ export const DataProvider = ({ children }) => {
             : item
         );
         localStorage.setItem("wholeData", JSON.stringify(editPreviousData));
-        return { ...state, videoData: editPreviousData };
+        return { ...state, notesData: {}, videoData: editPreviousData };
 
       default:
         return state;
